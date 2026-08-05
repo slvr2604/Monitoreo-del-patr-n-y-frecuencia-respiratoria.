@@ -68,6 +68,7 @@ Este proceso comprende:
 2. Intercambio gaseoso alveolar.
 3. Transporte de gases mediante el sistema circulatorio.
 <img width="549" height="364" alt="image" src="https://github.com/user-attachments/assets/7dbcde89-96a2-4724-bf8a-5c9018667b01" />
+Figura 1. Movimientos de la respiración. Tomado de: [7]
 
 ### Inspiración
 
@@ -304,6 +305,7 @@ Las señales fueron almacenadas para su posterior procesamiento.
 # IV. RESULTADOS
 
 <img width="1366" height="663" alt="Figure_1" src="https://github.com/user-attachments/assets/07311e2f-2872-47a7-8d31-0e021178939a" />
+Figura 2. Señal respiratoria registrada  durante una tarea de verbalización.
 
 Durante el desarrollo de la práctica se implementó un sistema de monitoreo respiratorio utilizando un sensor resistivo FSR402 conectado a una tarjeta de adquisición de datos NI-DAQ a través del canal analógico Dev10/ai0. La adquisición y el procesamiento de la señal se realizaron mediante un programa desarrollado en Python utilizando el entorno Spyder, el cual permitió visualizar la señal en tiempo real, almacenarla y aplicar posteriormente un filtrado digital.
 
