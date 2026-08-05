@@ -327,6 +327,264 @@ En las primeras pruebas el computador permaneció conectado al cargador, condici
 
 La figura 2 corresponde a la última adquisición realizada, durante la cual el sujeto ejecutó una tarea de verbalización realizando pausas para respirar. Aunque durante la prueba se identificaron aproximadamente ocho pausas respiratorias, la señal registrada únicamente permitió evidenciar con claridad algunos eventos asociados al proceso respiratorio. Posteriormente, la señal fue procesada mediante un filtro digital Butterworth pasabajas con frecuencia de corte de 1 Hz, obteniéndose una reducción importante del ruido de alta frecuencia y una representación más estable de la señal, aunque persistieron algunas perturbaciones que limitaron la identificación completa de todos los ciclos respiratorios.
 
+# Código de Adquisición y Procesamiento de la Señal Respiratoria
+
+El sistema desarrollado permite adquirir en tiempo real la señal proveniente del sensor FSR402 mediante una tarjeta DAQ de National Instruments. Posteriormente, la señal es visualizada, filtrada y procesada para facilitar la identificación del patrón respiratorio y el cálculo de la frecuencia respiratoria.
+
+---
+
+## Importación de librerías
+
+Inicialmente se importan las librerías necesarias para la adquisición, procesamiento y visualización de datos.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+import nidaqmx
+
+from nidaqmx.constants import AcquisitionType
+from nidaqmx.stream_readers import AnalogSingleChannelReader
+from scipy.signal import butter, sosfiltfilt, find_peaks, detrend
+```
+
+### Función de cada librería
+
+| Librería | Función |
+|-----------|----------|
+| NumPy | Manejo eficiente de vectores y operaciones matemáticas |
+| Matplotlib | Visualización gráfica de la señal |
+| nidaqmx | Comunicación con la tarjeta DAQ |
+| butter | Diseño de filtros digitales |
+| sosfiltfilt | Aplicación del filtro sin desfase |
+| detrend | Eliminación de tendencias lentas |
+| find_peaks | Detección de picos respiratorios |
+
+---
+
+## Configuración de adquisición
+
+Se definen los parámetros de captura de la señal.
+
+```python
+FS = 100
+DURACION = 60
+MUESTRAS_BLOQUE = 10
+VENTANA_VISIBLE = 10
+```
+
+### Parámetros utilizados
+
+| Parámetro | Valor | Descripción |
+|------------|------------|------------|
+| FS | 100 Hz | Frecuencia de muestreo |
+| DURACION | 60 s | Tiempo total de adquisición |
+| MUESTRAS_BLOQUE | 10 muestras | Tamaño de lectura por bloque |
+| VENTANA_VISIBLE | 10 s | Tiempo mostrado en pantalla |
+
+La frecuencia de muestreo de 100 Hz es suficiente para registrar señales respiratorias, ya que estas normalmente se encuentran por debajo de 1 Hz.
+
+---
+
+## Filtrado de la señal respiratoria
+
+Para mejorar la calidad de la señal adquirida se implementó una función de filtrado.
+
+```python
+def filtrar_respiracion(datos, frecuencia_muestreo):
+
+    datos_sin_tendencia = detrend(datos)
+
+    filtro = butter(
+        N=3,
+        Wn=[0.08, 0.8],
+        btype="bandpass",
+        fs=frecuencia_muestreo,
+        output="sos"
+    )
+
+    return sosfiltfilt(filtro, datos_sin_tendencia)
+```
+
+### Eliminación de tendencia
+
+```python
+datos_sin_tendencia = detrend(datos)
+```
+
+Esta instrucción elimina cambios lentos producidos por:
+
+- Movimiento del sensor.
+- Variaciones de presión de contacto.
+- Deriva electrónica.
+
+De esta forma la señal queda centrada alrededor de cero.
+
+---
+
+### Filtro pasa banda Butterworth
+
+```python
+filtro = butter(
+    N=3,
+    Wn=[0.08, 0.8],
+    btype="bandpass",
+    fs=frecuencia_muestreo,
+    output="sos"
+)
+```
+
+Se implementó un filtro Butterworth de tercer orden.
+
+#### Frecuencias de corte
+
+| Frecuencia | Significado |
+|------------|------------|
+| 0.08 Hz | Elimina componentes extremadamente lentas |
+| 0.8 Hz | Elimina ruido de alta frecuencia |
+
+Estas frecuencias corresponden aproximadamente a:
+
+- 4.8 respiraciones por minuto.
+- 48 respiraciones por minuto.
+
+Por tanto, el filtro conserva únicamente el rango fisiológico respiratorio esperado.
+
+---
+
+### Filtrado sin desfase
+
+```python
+return sosfiltfilt(filtro, datos_sin_tendencia)
+```
+
+La función `sosfiltfilt()` aplica el filtro hacia adelante y hacia atrás.
+
+Ventajas:
+
+- No introduce desfase temporal.
+- Conserva la posición real de los máximos y mínimos.
+- Mantiene intacta la morfología respiratoria.
+
+Esto es importante para calcular correctamente la frecuencia respiratoria.
+
+---
+
+## Visualización en tiempo real
+
+Se crea una ventana gráfica que muestra simultáneamente:
+
+- Señal cruda.
+- Señal suavizada.
+
+```python
+linea_cruda, = ax.plot(...)
+linea_suavizada, = ax.plot(...)
+```
+
+La señal suavizada facilita la identificación visual de cada ciclo respiratorio mientras la adquisición está en curso.
+
+---
+
+## Suavizado para visualización
+
+```python
+kernel = np.ones(ventana_suavizado) / ventana_suavizado
+
+senal_suavizada = np.convolve(
+    senal_actual,
+    kernel,
+    mode="same"
+)
+```
+
+Se utiliza un promedio móvil de 200 ms.
+
+### Objetivo
+
+Reducir:
+
+- Pequeñas oscilaciones.
+- Ruido eléctrico.
+- Variaciones instantáneas.
+
+Sin modificar significativamente la forma de la respiración.
+
+Este suavizado solo se emplea para visualización y no altera la señal original almacenada.
+
+---
+
+## Adquisición mediante la DAQ
+
+La comunicación con la tarjeta se realiza mediante NI-DAQmx.
+
+```python
+task.ai_channels.add_ai_voltage_chan(
+    physical_channel=CANAL,
+    min_val=VOLTAJE_MIN,
+    max_val=VOLTAJE_MAX
+)
+```
+
+Se configura una entrada analógica capaz de medir señales entre:
+
+```text
+0 V y 5 V
+```
+
+correspondientes al rango de salida del divisor de voltaje implementado con el sensor FSR402.
+
+Posteriormente se configura el reloj de muestreo:
+
+```python
+task.timing.cfg_samp_clk_timing(
+    rate=FS,
+    sample_mode=AcquisitionType.CONTINUOUS,
+    samps_per_chan=TOTAL_MUESTRAS
+)
+```
+
+Esto permite adquirir datos continuamente a una frecuencia constante de 100 Hz.
+
+---
+
+## Actualización automática de la gráfica
+
+Durante la adquisición:
+
+1. Se reciben nuevos datos.
+2. Se actualizan las curvas.
+3. Se ajustan automáticamente los ejes.
+4. Se muestra el porcentaje completado.
+
+```python
+ax.set_title(
+    "FSR 402 en tiempo real | "
+    f"{ultimo_tiempo:.1f} de {DURACION} s | "
+    f"{porcentaje:.0f}%"
+)
+```
+
+De esta manera el operador puede verificar en tiempo real la calidad de la señal respiratoria.
+
+---
+
+# Resultados obtenidos mediante el código
+
+El programa permitió adquirir exitosamente la señal proveniente del sensor FSR402 durante las condiciones de reposo y verbalización.
+
+Posteriormente, el filtrado pasa banda eliminó las componentes de ruido y las tendencias de baja frecuencia, permitiendo observar claramente los ciclos respiratorios.
+
+La señal procesada presentó una forma periódica compatible con la fisiología respiratoria normal y permitió estimar la frecuencia respiratoria tanto mediante conteo temporal como mediante análisis espectral.
+
+---
+
+# Imagen de resultado
+
+<p align="center">
+<img width="1366" height="663" alt="image" src="https://github.com/user-attachments/assets/3932f420-36d8-427e-a717-facbf9cb8954" />
+</p>
+
+**Figura X.** Señal respiratoria adquirida en tiempo real mediante el sensor FSR402. Se observa la señal original y la señal suavizada utilizada para facilitar la visualización del patrón respiratorio.
 ---
 
 # V. ANÁLISIS DE RESULTADOS
