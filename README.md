@@ -303,6 +303,8 @@ Las señales fueron almacenadas para su posterior procesamiento.
 
 # IV. RESULTADOS
 
+<img width="1366" height="663" alt="Figure_1" src="https://github.com/user-attachments/assets/07311e2f-2872-47a7-8d31-0e021178939a" />
+
 Durante el desarrollo de la práctica se implementó un sistema de monitoreo respiratorio utilizando un sensor resistivo FSR402 conectado a una tarjeta de adquisición de datos NI-DAQ a través del canal analógico Dev10/ai0. La adquisición y el procesamiento de la señal se realizaron mediante un programa desarrollado en Python utilizando el entorno Spyder, el cual permitió visualizar la señal en tiempo real, almacenarla y aplicar posteriormente un filtrado digital.
 
 Con el fin de obtener una señal representativa del proceso respiratorio, se realizaron aproximadamente cinco pruebas experimentales bajo diferentes condiciones de adquisición. Inicialmente se efectuaron registros con el sujeto en reposo y posteriormente durante tareas de verbalización, de acuerdo con lo establecido en la guía de laboratorio.
