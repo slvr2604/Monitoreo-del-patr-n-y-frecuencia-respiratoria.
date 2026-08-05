@@ -299,6 +299,8 @@ El sujeto habló continuamente durante la adquisición para analizar cambios en 
 
 Las señales fueron almacenadas para su posterior procesamiento.
 
+---
+
 # IV. RESULTADOS
 
 Durante el desarrollo de la práctica se implementó un sistema de monitoreo respiratorio utilizando un sensor resistivo FSR402 conectado a una tarjeta de adquisición de datos NI-DAQ a través del canal analógico Dev10/ai0. La adquisición y el procesamiento de la señal se realizaron mediante un programa desarrollado en Python utilizando el entorno Spyder, el cual permitió visualizar la señal en tiempo real, almacenarla y aplicar posteriormente un filtrado digital.
@@ -311,6 +313,29 @@ En las primeras pruebas el computador permaneció conectado al cargador, condici
 
 La figura 2 corresponde a la última adquisición realizada, durante la cual el sujeto ejecutó una tarea de verbalización realizando pausas para respirar. Aunque durante la prueba se identificaron aproximadamente ocho pausas respiratorias, la señal registrada únicamente permitió evidenciar con claridad algunos eventos asociados al proceso respiratorio. Posteriormente, la señal fue procesada mediante un filtro digital Butterworth pasabajas con frecuencia de corte de 1 Hz, obteniéndose una reducción importante del ruido de alta frecuencia y una representación más estable de la señal, aunque persistieron algunas perturbaciones que limitaron la identificación completa de todos los ciclos respiratorios.
 
+---
+
+# V. ANÁLISIS DE RESULTADOS
+
+La calidad de la señal adquirida estuvo influenciada por diferentes factores relacionados tanto con el montaje experimental como con las condiciones de adquisición. Uno de los principales factores identificados fue el empleo de cables tipo jumper para la conexión del sensor FSR402, los cuales presentan un bajo nivel de protección frente a interferencias electromagnéticas, favoreciendo la captación de ruido externo y disminuyendo la relación señal-ruido del sistema.
+
+Durante las primeras pruebas también se observó que el computador permanecía conectado al cargador mientras se realizaba la adquisición de la señal. Esta condición puede introducir perturbaciones provenientes de la red eléctrica, generando componentes de interferencia que afectan el registro de señales de baja amplitud. Aunque posteriormente se realizaron adquisiciones utilizando únicamente la batería del computador, persistieron algunas perturbaciones, lo que sugiere que el ruido observado no dependía únicamente de esta condición, sino también del cableado empleado, la sensibilidad del sensor y la estabilidad del contacto entre el FSR402 y la superficie del cuerpo.
+
+Es importante resaltar que durante algunas de las primeras pruebas fue posible observar con mayor claridad la forma de onda correspondiente al patrón respiratorio, aunque esta permanecía superpuesta por ruido de alta frecuencia. Debido a que dichas adquisiciones no fueron almacenadas, el análisis presentado en este informe se realizó sobre el último registro disponible, el cual corresponde a las condiciones finales del montaje experimental.
+
+En la última adquisición el sujeto realizó una tarea de verbalización con aproximadamente ocho pausas respiratorias. Sin embargo, únicamente algunos de estos eventos fueron identificables en la señal registrada. Este comportamiento puede atribuirse a varios factores. En primer lugar, el sensor FSR402 detecta cambios en la presión ejercida sobre su superficie; por lo tanto, pequeñas variaciones en la expansión torácica durante algunas respiraciones pudieron generar cambios de voltaje insuficientes para diferenciarse claramente del ruido presente. Adicionalmente, durante la verbalización el patrón respiratorio deja de ser periódico, ya que las inspiraciones y espiraciones dependen del ritmo del habla, dificultando aún más su identificación cuando la señal presenta una baja relación señal-ruido.
+
+La aplicación del filtro digital Butterworth permitió atenuar significativamente las componentes de alta frecuencia, facilitando la observación de las variaciones lentas asociadas al proceso respiratorio. No obstante, permanecieron algunos picos transitorios de gran amplitud que probablemente corresponden a movimientos involuntarios del sujeto, cambios en la presión ejercida sobre el sensor o perturbaciones eléctricas, más que a eventos respiratorios propiamente dichos. En consecuencia, aunque fue posible evidenciar parcialmente el comportamiento respiratorio, las condiciones experimentales limitaron la estimación precisa de la frecuencia respiratoria durante esta adquisición.
+
+---
+
+#VI. CONCLUSIONES
+
+Se implementó satisfactoriamente un sistema de adquisición para el monitoreo del proceso respiratorio utilizando un sensor FSR402 conectado a una tarjeta NI-DAQ, realizando la adquisición y el procesamiento digital de la señal mediante Python en el entorno Spyder como alternativa al software MATLAB propuesto inicialmente en la guía de laboratorio.
+
+La aplicación de un filtro digital Butterworth pasabajas permitió mejorar significativamente la calidad de la señal adquirida al reducir gran parte del ruido de alta frecuencia, facilitando la visualización del comportamiento respiratorio. Sin embargo, la presencia de interferencias electromagnéticas y perturbaciones asociadas al montaje experimental impidió obtener una señal completamente limpia y limitó la identificación de todos los ciclos respiratorios.
+
+La práctica experimental permitió evidenciar que la calidad de una señal biomédica depende no solo del sensor utilizado, sino también de aspectos como el acondicionamiento electrónico, el tipo de cableado, la estabilidad de las conexiones, las condiciones de alimentación del equipo de adquisición y la correcta ubicación del sensor sobre el cuerpo del sujeto. Estos factores influyen directamente en la relación señal-ruido y, por tanto, en la confiabilidad de las mediciones obtenidas.
 
 ---
 
