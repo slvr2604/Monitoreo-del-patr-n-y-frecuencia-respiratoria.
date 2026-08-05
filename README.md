@@ -308,14 +308,6 @@ Las señales fueron almacenadas para su posterior procesamiento.
 ---
 
 # IV. RESULTADOS
-<p align="center">
-  <img width="1366" height="663" alt="Figure_1" src="https://github.com/user-attachments/assets/07311e2f-2872-47a7-8d31-0e021178939a" />
-</p>
-
-<p align="center">
-  <sub>Figura 2. Señal respiratoria registrada  durante una tarea de verbalización.</sub>
-</p>
-
 
 Durante el desarrollo de la práctica se implementó un sistema de monitoreo respiratorio utilizando un sensor resistivo FSR402 conectado a una tarjeta de adquisición de datos NI-DAQ a través del canal analógico Dev10/ai0. La adquisición y el procesamiento de la señal se realizaron mediante un programa desarrollado en Python utilizando el entorno Spyder, el cual permitió visualizar la señal en tiempo real, almacenarla y aplicar posteriormente un filtrado digital.
 
@@ -570,7 +562,7 @@ De esta manera el operador puede verificar en tiempo real la calidad de la seña
 
 # Resultados obtenidos mediante el código
 
-El programa permitió adquirir exitosamente la señal proveniente del sensor FSR402 durante las condiciones de reposo y verbalización.
+El programa permitió adquirir la señal proveniente del sensor FSR402 durante las condiciones de reposo y verbalización.
 
 Posteriormente, el filtrado pasa banda eliminó las componentes de ruido y las tendencias de baja frecuencia, permitiendo observar claramente los ciclos respiratorios.
 
@@ -578,13 +570,24 @@ La señal procesada presentó una forma periódica compatible con la fisiología
 
 ---
 
-# Imagen de resultado
+# Imágenes de resultado
 
 <p align="center">
 <img width="1366" height="663" alt="image" src="https://github.com/user-attachments/assets/3932f420-36d8-427e-a717-facbf9cb8954" />
 </p>
 
-**Figura X.** Señal respiratoria adquirida en tiempo real mediante el sensor FSR402. Se observa la señal original y la señal suavizada utilizada para facilitar la visualización del patrón respiratorio.
+**Figura 2.** Señal respiratoria adquirida en tiempo real mediante el sensor FSR402. Se observa la señal original y la señal suavizada utilizada para facilitar la visualización del patrón respiratorio.
+## Resumen cuantitativo de resultados
+
+| Parámetro | Valor obtenido |
+|------------|------------|
+| Orientación detectada | Descendente |
+| Respiraciones detectadas | 14 |
+| Frecuencia respiratoria por detección de picos | 14.0 rpm |
+| Frecuencia dominante (FFT) | 0.4 Hz |
+| Frecuencia respiratoria estimada por FFT | 24.0 rpm |
+
+**Tabla 1.** Parámetros obtenidos a partir del procesamiento de la señal respiratoria adquirida con el sensor FSR402.
 ---
 
 # V. ANÁLISIS DE RESULTADOS
