@@ -329,7 +329,7 @@ La aplicación del filtro digital Butterworth permitió atenuar significativamen
 
 ---
 
-#VI. CONCLUSIONES
+# VI. CONCLUSIONES
 
 Se implementó satisfactoriamente un sistema de adquisición para el monitoreo del proceso respiratorio utilizando un sensor FSR402 conectado a una tarjeta NI-DAQ, realizando la adquisición y el procesamiento digital de la señal mediante Python en el entorno Spyder como alternativa al software MATLAB propuesto inicialmente en la guía de laboratorio.
 
