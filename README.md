@@ -302,9 +302,13 @@ Las señales fueron almacenadas para su posterior procesamiento.
 # IV. RESULTADOS
 
 Durante el desarrollo de la práctica se implementó un sistema de monitoreo respiratorio utilizando un sensor resistivo FSR402 conectado a una tarjeta de adquisición de datos NI-DAQ a través del canal analógico Dev10/ai0. La adquisición y el procesamiento de la señal se realizaron mediante un programa desarrollado en Python utilizando el entorno Spyder, el cual permitió visualizar la señal en tiempo real, almacenarla y aplicar posteriormente un filtrado digital.
+
 Con el fin de obtener una señal representativa del proceso respiratorio, se realizaron aproximadamente cinco pruebas experimentales bajo diferentes condiciones de adquisición. Inicialmente se efectuaron registros con el sujeto en reposo y posteriormente durante tareas de verbalización, de acuerdo con lo establecido en la guía de laboratorio.
+
 Durante las primeras adquisiciones se observó una señal con un nivel considerable de ruido de alta frecuencia; sin embargo, aún era posible distinguir parcialmente la forma de onda asociada al patrón respiratorio, identificándose las variaciones producidas por las inhalaciones y exhalaciones. Con el propósito de mejorar la calidad de la señal, se realizaron diferentes ajustes en el montaje experimental, incluyendo la revisión de las conexiones, la posición del sensor sobre el tórax y las condiciones de alimentación del computador empleado para la adquisición.
+
 En las primeras pruebas el computador permaneció conectado al cargador, condición que pudo favorecer la aparición de interferencias provenientes de la red eléctrica. Posteriormente se realizaron nuevas adquisiciones utilizando únicamente la batería del computador, con el fin de reducir dichas perturbaciones.
+
 La figura 2 corresponde a la última adquisición realizada, durante la cual el sujeto ejecutó una tarea de verbalización realizando pausas para respirar. Aunque durante la prueba se identificaron aproximadamente ocho pausas respiratorias, la señal registrada únicamente permitió evidenciar con claridad algunos eventos asociados al proceso respiratorio. Posteriormente, la señal fue procesada mediante un filtro digital Butterworth pasabajas con frecuencia de corte de 1 Hz, obteniéndose una reducción importante del ruido de alta frecuencia y una representación más estable de la señal, aunque persistieron algunas perturbaciones que limitaron la identificación completa de todos los ciclos respiratorios.
 
 
