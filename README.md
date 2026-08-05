@@ -299,6 +299,10 @@ El sujeto habló continuamente durante la adquisición para analizar cambios en 
 
 Las señales fueron almacenadas para su posterior procesamiento.
 
+# IV. RESULTADOS
+
+Durante el desarrollo de la práctica se implementó un sistema de monitoreo respiratorio utilizando un sensor resistivo FSR402 conectado a una tarjeta de adquisición de datos NI-DAQ a través del canal analógico Dev10/ai0. La adquisición y el procesamiento de la señal se realizaron mediante un programa desarrollado en Python utilizando el entorno Spyder, el cual permitió visualizar la señal en tiempo real, almacenarla y aplicar posteriormente un filtrado digital.
+
 ---
 
 # Referencias
