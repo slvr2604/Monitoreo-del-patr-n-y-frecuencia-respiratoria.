@@ -67,8 +67,13 @@ Este proceso comprende:
 1. Ventilación pulmonar.
 2. Intercambio gaseoso alveolar.
 3. Transporte de gases mediante el sistema circulatorio.
+<p align="center">
 <img width="549" height="364" alt="image" src="https://github.com/user-attachments/assets/7dbcde89-96a2-4724-bf8a-5c9018667b01" />
-Figura 1. Movimientos de la respiración. Tomado de: [7]
+</p>
+
+<p align="center">
+  <sub>Figura 1. Movimientos de la respiración. Tomado de: [7].</sub>
+</p>
 
 ### Inspiración
 
